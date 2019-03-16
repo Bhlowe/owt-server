@@ -7,7 +7,7 @@ FROM ubuntu:18.04
 
 # Build
 RUN apt-get update \
-        && apt-get install -y --no-install-recommends git build-essential g++ autoconf automake libtool xz-utils libasound-dev yarn gdb vim yasm wget sudo ca-certificates gnupg2 docbook2x nodejs npm libdrm-dev libva-dev
+        && apt-get install -y --no-install-recommends git build-essential g++ autoconf automake libtool xz-utils libasound-dev yarn gdb vim yasm wget sudo ca-certificates gnupg2 docbook2x nodejs npm libdrm-dev libva-dev lsb-release
 
 RUN  git config --global user.email "you@example.com" && \
   git config --global user.name "Your Name"
@@ -19,16 +19,13 @@ WORKDIR /opt/owt-server
 RUN scripts/installDepsUnattended.sh
 RUN apt-get install -y npm
 RUN npm install -g node-gyp grunt
-# RUN git clone https://github.com/Intel-Media-SDK/MediaSDK.git /opt/msdk && cd /opt/msdk && mkdir build && cd build && cmake .. # && make && make install 
 
 
-RUN apt install -y \
-    lsb-release
 
 ARG MEDIASDK_VER=intel-mediasdk-18.3.1
-ADD https://github.com/Intel-Media-SDK/MediaSDK/releases/download/intel-mediasdk-18.3.1/MediaStack.tar.gz /mediasdk/
-RUN tar -C /mediasdk -xf /mediasdk/MediaStack.tar.gz
-RUN cd /mediasdk/MediaStack && ./install_media.sh
+RUN cd /opt && wget https://github.com/Intel-Media-SDK/MediaSDK/releases/download/intel-mediasdk-18.3.1/MediaStack.tar.gz && \
+tar -zxf MediaStack.tar.gz && \
+cd MediaStack && ./install_media.sh
 ENV MFX_HOME=/opt/intel/mediasdk
 
 # Install js
