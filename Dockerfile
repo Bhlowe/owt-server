@@ -36,7 +36,7 @@ ENV webrtc-javascript-sdk-sample-conference-dist=/opt/owt-client-javascript/dist
 RUN scripts/build.js -t all --check
 RUN scripts/pack.js -t all --install-module --sample-path /opt/owt-client-javascript/dist
 WORKDIR /opt/owt-server/dist
-RUN ./bin/init-all.sh --deps
+# RUN ./bin/init-all.sh --deps
 
 
 # Expose ports
@@ -44,7 +44,7 @@ EXPOSE 3004
 
 # TODO: Set Entrypoint to binary
 # Run when the container launches
-# ENTRYPOINT [ "/bin/bash" ]
-ENTRYPOINT [ "./bin/start-all.sh" ]
+ENTRYPOINT [ "/bin/bash" ]
+# ENTRYPOINT [ "./bin/start-all.sh" ]
 
 
